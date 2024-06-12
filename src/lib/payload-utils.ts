@@ -5,6 +5,8 @@ import { NextRequest } from "next/server";
 export const getServerSideUser = async (
   cookies: NextRequest["cookies"] | ReadonlyRequestCookies
 ) => {
+  console.log("Cookies:", cookies);
+
   const token = cookies.get("payload-token")?.value;
 
   if (!token) {
@@ -26,7 +28,6 @@ export const getServerSideUser = async (
     );
 
     if (!meRes.ok) {
-      // Log the response text for more insight
       const errorText = await meRes.text();
       console.error(
         `API request failed with status ${meRes.status}: ${errorText}`
