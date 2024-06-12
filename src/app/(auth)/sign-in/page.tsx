@@ -5,24 +5,25 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+
 import {
   AuthCredentialsValidator,
   TAuthCredentialsValidator,
 } from "@/lib/validator/account-credentials-validator";
 import { trpc } from "@/trpc/client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { ZodError } from "zod";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Page = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const isSeller = searchParams.get("as") === "seller";
-  const origin = searchParams.get("orgin");
+  const origin = searchParams.get("origin");
 
   const continueAsSeller = () => {
     router.push("?as=seller");
@@ -41,8 +42,8 @@ const Page = () => {
   });
 
   const { mutate: signIn, isLoading } = trpc.auth.signIn.useMutation({
-    onSuccess: () => {
-      toast.success("signed in successfully");
+    onSuccess: async () => {
+      toast.success("Signed in successfully");
 
       router.refresh();
 
@@ -71,21 +72,22 @@ const Page = () => {
 
   return (
     <>
-      <div className="container relative flex pt-20 flex-col items-center lg:px-0 mx-auto">
+      <div className="container relative flex pt-20 flex-col items-center justify-center lg:px-0">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center space-y-2 text-center">
-            {/*  <Icons.logo className="h-20 w-20" />  Login Logo goes here     */}
-            <h1 className="text-2x1 font-bold text-zinc-900">
-              Login To Your {isSeller ? "Seller" : ""} Account
+            {/* <Icons.logo className='h-20 w-20' />   LOGO HERE */}
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Sign in to your {isSeller ? "seller" : ""} account
             </h1>
+
             <Link
               className={buttonVariants({
                 variant: "link",
-                className: " gap-1.5 text-blue-500",
+                className: "gap-1.5",
               })}
               href="/sign-up"
             >
-              Don&apos;t have an account? Sign up!
+              Don&apos;t have an account?
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -100,7 +102,7 @@ const Page = () => {
                     className={cn({
                       "focus-visible:ring-red-500": errors.email,
                     })}
-                    placeholder="You@example.com"
+                    placeholder="you@example.com"
                   />
                   {errors?.email && (
                     <p className="text-sm text-red-500">
@@ -108,6 +110,7 @@ const Page = () => {
                     </p>
                   )}
                 </div>
+
                 <div className="grid gap-1 py-2">
                   <Label htmlFor="password">Password</Label>
                   <Input
@@ -125,8 +128,11 @@ const Page = () => {
                   )}
                 </div>
 
-                <Button className="bg-zinc-900 text-zinc-100 hover:bg-zinc-900">
-                  Login
+                <Button disabled={isLoading}>
+                  {isLoading && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Sign in
                 </Button>
               </div>
             </form>
@@ -147,7 +153,6 @@ const Page = () => {
 
             {isSeller ? (
               <Button
-                className="rounded-lg bg-zinc-900 text-white"
                 onClick={continueAsBuyer}
                 variant="secondary"
                 disabled={isLoading}
@@ -156,7 +161,6 @@ const Page = () => {
               </Button>
             ) : (
               <Button
-                className="rounded-lg h-10 px-4 py-2 bg-zinc-900 text-zinc-100 hover:bg-zinc-900"
                 onClick={continueAsSeller}
                 variant="secondary"
                 disabled={isLoading}

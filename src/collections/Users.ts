@@ -1,6 +1,4 @@
-{
-  /* import { PrimaryActionEmailHtml } from "../components/emails/PrimaryActionEmail"; */
-}
+import { PrimaryActionEmailHtml } from "../components/emails/PrimaryActionEmail";
 import { Access, CollectionConfig } from "payload/types";
 
 const adminsAndUser: Access = ({ req: { user } }) => {
@@ -18,7 +16,6 @@ export const Users: CollectionConfig = {
   auth: {
     verify: {
       generateEmailHTML: ({ token }) => {
-        // @ts-ignore
         return PrimaryActionEmailHtml({
           actionLabel: "verify your account",
           buttonText: "Verify Account",

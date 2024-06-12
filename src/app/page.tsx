@@ -51,7 +51,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-6 bg-white">
             <Link
-              href="/features"
+              href="/sell"
               className="rounded-lg h-10 px-4 py-2 text-white bg-zinc-900"
             >
               Features

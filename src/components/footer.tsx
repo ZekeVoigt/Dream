@@ -74,7 +74,7 @@ const Footer = () => {
                     About Dream
                   </h3>
                   <a
-                    href="/features"
+                    href="/sell"
                     className="text-zinc-700 text-sm hover:underline"
                   >
                     Features

@@ -80,10 +80,7 @@ export default function Zeke() {
                 post it on our seller dashboard, and boom you make money! If you
                 would like to learn more about what Dream is please head over to
                 our super awsome{" "}
-                <Link
-                  className="text-blue-600 hover:underline"
-                  href={"/features"}
-                >
+                <Link className="text-blue-600 hover:underline" href={"/sell"}>
                   {" "}
                   features{" "}
                 </Link>

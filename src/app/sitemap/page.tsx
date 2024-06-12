@@ -25,7 +25,7 @@ export default function SiteMap() {
                 </a>
               </div>
               <div>
-                <a className="hover:underline text-blue-500" href="/features">
+                <a className="hover:underline text-blue-500" href="/sell">
                   Features
                 </a>
               </div>
@@ -154,7 +154,7 @@ export default function SiteMap() {
                 </a>
               </div>
               <div>
-                <a className="hover:underline text-blue-500" href="/features">
+                <a className="hover:underline text-blue-500" href="/sell">
                   Company profiles
                 </a>
               </div>

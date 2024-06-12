@@ -12,19 +12,19 @@ export const useAuth = () => {
           method: "POST",
           credentials: "include",
           headers: {
-            "content-Type": "application/json",
+            "Content-Type": "application/json",
           },
         }
       );
 
       if (!res.ok) throw new Error();
 
-      toast.success("signed out successfully");
+      toast.success("Signed out successfully");
 
       router.push("/sign-in");
       router.refresh();
     } catch (err) {
-      toast.error("couldn't sign out, please try again.");
+      toast.error("Couldn't sign out, please try again.");
     }
   };
 

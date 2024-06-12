@@ -54,7 +54,7 @@ const Navbar = async () => {
                         variant: "ghost",
                       })}
                     >
-                      Sign In
+                      Sign in
                     </Link>
                   )}
 
