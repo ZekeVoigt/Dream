@@ -7,6 +7,14 @@ export const getServerSideUser = async (
 ) => {
   const token = cookies.get("payload-token")?.value;
 
+  if (!token) {
+    console.error("No token found in cookies");
+    return { user: null };
+  }
+
+  console.log("Fetching user data with token:", token);
+  console.log("Server URL:", process.env.NEXT_PUBLIC_SERVER_URL);
+
   try {
     const meRes = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`,
@@ -18,8 +26,11 @@ export const getServerSideUser = async (
     );
 
     if (!meRes.ok) {
-      // Handle non-200 responses
-      console.error(`API request failed with status ${meRes.status}`);
+      // Log the response text for more insight
+      const errorText = await meRes.text();
+      console.error(
+        `API request failed with status ${meRes.status}: ${errorText}`
+      );
       return { user: null };
     }
 
