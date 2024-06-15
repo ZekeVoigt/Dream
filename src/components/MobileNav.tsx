@@ -79,14 +79,7 @@ const MobileNav = () => {
                     <div className="grid grid-cols-2 gap-y-10 gap-x-4">
                       {category.Featured.map((item) => (
                         <div key={item.name} className="group relative text-sm">
-                          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
-                            <Image
-                              fill
-                              src={item.imageSrc}
-                              alt="product category image"
-                              className="object-cover object-center"
-                            />
-                          </div>
+                          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75"></div>
                           <Link
                             href={item.href}
                             className="mt-6 block font-medium text-gray-900"
