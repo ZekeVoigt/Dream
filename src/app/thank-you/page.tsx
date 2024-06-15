@@ -3,7 +3,6 @@ import Image from "next/image";
 import { cookies } from "next/headers";
 import { getPayloadClient } from "@/get-payload";
 import { notFound, redirect } from "next/navigation";
-import { Span } from "next/dist/trace";
 import { Product, ProductFile, User } from "@/payload-types";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { formatPrice } from "@/lib/utils";
@@ -14,6 +13,19 @@ interface PageProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
+}
+
+// Define the expected structure for Order and User
+interface Order {
+  id: string;
+  user:
+    | {
+        id: string;
+        email: string;
+      }
+    | string;
+  _isPaid: boolean;
+  products: Product[];
 }
 
 const ThankYouPage = async ({ searchParams }: PageProps) => {
@@ -33,7 +45,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
     },
   });
 
-  const [order] = orders;
+  const [order] = orders as unknown as Order[]; // Assert the type of order
 
   if (!order) return notFound();
 
@@ -44,7 +56,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
     return redirect(`/sign-in?orgin=thank-you?orderId=${order.id}`);
   }
 
-  const products = order.products as Product[];
+  const products = order.products;
 
   const orderTotal = products.reduce((total, product) => {
     return total + product.price;
@@ -94,7 +106,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
               <div className="mt-2 text-gray-900">{order.id}</div>
 
               <ul className="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-muted-foreground">
-                {(order.products as Product[]).map((product) => {
+                {order.products.map((product) => {
                   const label = PRODUCT_CATEGORIES.find(
                     ({ value }) => value === product.category
                   )?.label;
@@ -161,7 +173,9 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
 
               <PaymentStatus
                 isPaid={order._isPaid}
-                orderEmail={(order.user as User).email}
+                orderEmail={
+                  typeof order.user !== "string" ? order.user.email : ""
+                }
                 orderId={order.id}
               />
 

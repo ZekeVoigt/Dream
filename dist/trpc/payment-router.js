@@ -48,7 +48,7 @@ exports.paymentRouter = (0, trpc_1.router)({
         .mutation(function (_a) {
         var ctx = _a.ctx, input = _a.input;
         return __awaiter(void 0, void 0, void 0, function () {
-            var user, productIds, payload, products, filteredProducts, order, line_items, stripeSession, error_1;
+            var user, productIds, payload, products, filteredProducts, order, line_items, stripeSession, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -70,26 +70,42 @@ exports.paymentRouter = (0, trpc_1.router)({
                             })];
                     case 2:
                         products = (_b.sent()).docs;
+                        console.log("Products fetched:", products);
                         filteredProducts = products.filter(function (prod) { return Boolean(prod.priceId); });
+                        console.log("Filtered products:", filteredProducts);
                         return [4 /*yield*/, payload.create({
                                 collection: "orders",
                                 data: {
                                     _isPaid: false,
-                                    products: filteredProducts.map(function (prod) { return prod.id; }),
+                                    products: filteredProducts.map(function (prod) {
+                                        if (typeof prod.id === "number") {
+                                            return String(prod.id);
+                                        }
+                                        return prod.id;
+                                    }),
                                     user: user.id,
                                 },
                             })];
                     case 3:
-                        order = _b.sent();
+                        order = (_b.sent());
                         line_items = [];
                         filteredProducts.forEach(function (product) {
-                            line_items.push({
-                                price: product.priceId,
-                                quantity: 1,
-                            });
+                            console.log("Product priceId:", product.priceId);
+                            if (typeof product.priceId === "string") {
+                                line_items.push({
+                                    price: product.priceId,
+                                    quantity: 1,
+                                });
+                            }
+                            else {
+                                throw new server_1.TRPCError({
+                                    code: "BAD_REQUEST",
+                                    message: "Product ".concat(product.id, " does not have a valid priceId."),
+                                });
+                            }
                         });
                         line_items.push({
-                            price: "price_1P59nW05fNcBdPQguXgei4f8",
+                            price: "price_1OCeBwA19umTXGu8s4p2G3aX",
                             quantity: 1,
                             adjustable_quantity: {
                                 enabled: false,
@@ -101,7 +117,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                         return [4 /*yield*/, stripe_1.stripe.checkout.sessions.create({
                                 success_url: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/thank-you?orderId=").concat(order.id),
                                 cancel_url: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/cart"),
-                                payment_method_types: ["card"],
+                                payment_method_types: ["card", "paypal"],
                                 mode: "payment",
                                 metadata: {
                                     userId: user.id,
@@ -113,8 +129,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                         stripeSession = _b.sent();
                         return [2 /*return*/, { url: stripeSession.url }];
                     case 6:
-                        error_1 = _b.sent();
-                        console.log(error_1);
+                        err_1 = _b.sent();
                         return [2 /*return*/, { url: null }];
                     case 7: return [2 /*return*/];
                 }

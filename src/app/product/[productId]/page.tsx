@@ -11,6 +11,7 @@ import { Check, Shield, Star } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "@/components/footer";
+import { Product } from "@/payload-types"; // Import Product type
 
 interface PageProps {
   params: {
@@ -45,11 +46,14 @@ const Page = async ({ params }: PageProps) => {
 
   if (!product) return notFound();
 
+  // Assert the product type
+  const typedProduct = product as unknown as Product;
+
   const label = PRODUCT_CATEGORIES.find(
-    ({ value }) => value === product.category
+    ({ value }) => value === typedProduct.category
   )?.label;
 
-  const vaildUrls = product.images
+  const validUrls = typedProduct.images
     .map(({ image }) => (typeof image === "string" ? image : image.url))
     .filter(Boolean) as string[];
 
@@ -87,14 +91,14 @@ const Page = async ({ params }: PageProps) => {
 
               <div className="mt-4">
                 <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  {product.name}
+                  {typedProduct.name}
                 </h1>
               </div>
 
               <section className="mt-4">
                 <div className="flex items-center">
                   <p className="font-medium text-gray-900">
-                    {formatPrice(product.price)}
+                    {formatPrice(typedProduct.price)}
                   </p>
 
                   <div className="ml-4 border-l text-muted-foreground border-gray-300 pl-4">
@@ -104,7 +108,7 @@ const Page = async ({ params }: PageProps) => {
 
                 <div className="mt-4 space-y-6">
                   <p className="text-base text-muted-foreground">
-                    {product.description}
+                    {typedProduct.description}
                   </p>
                 </div>
 
@@ -182,7 +186,7 @@ const Page = async ({ params }: PageProps) => {
             {/* Product images */}
             <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
               <div className="aspect-square rounded-lg">
-                <ImageSlider urls={vaildUrls} />
+                <ImageSlider urls={validUrls} />
               </div>
             </div>
 
@@ -190,7 +194,7 @@ const Page = async ({ params }: PageProps) => {
             <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-2-lg lg:self-start">
               <div>
                 <div className="mt-10 bg-zinc-900 text-white border rounded-xl">
-                  <AddToCartButton product={product} />
+                  <AddToCartButton product={typedProduct} />
                 </div>
                 <div className="mt-6 text-center">
                   <div className="group inline-flex text-sm text-medium">
@@ -208,13 +212,22 @@ const Page = async ({ params }: PageProps) => {
           </div>
         </div>
 
+        <div>
+          <MaxWidthWrapper>
+            <div>
+              <div className="flex justify-center">
+                <h1 className="font-semibold text-3xl">Features</h1>
+              </div>
+            </div>
+          </MaxWidthWrapper>
+        </div>
+
         <ProductReel
           href="/store"
-          query={{ category: product.category, limit: 4 }}
+          query={{ category: typedProduct.category, limit: 4 }}
           title={`Similar ${label} Products`}
-          subtitle={`Browse similar high-quality ${label} products just like "${product.name}"`}
+          subtitle={`Browse similar high-quality ${label} products just like "${typedProduct.name}"`}
         />
-
         <div className=" h-screen">
           <div>
             <h1>Testimonials will go here </h1>

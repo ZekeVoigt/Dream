@@ -12,8 +12,15 @@ import {
   SplitSquareHorizontalIcon,
 } from "lucide-react";
 import ProductReel from "@/components/ProductReel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { ContainerScroll } from "@/components/ui/scroll-animation";
+import { Card, ContainerScroll } from "@/components/ui/scroll-animation";
 
 import Footer from "@/components/footer";
 
@@ -41,25 +48,32 @@ const perks = [
 export default function Home() {
   return (
     <>
-      <MaxWidthWrapper>
-        <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl border-b-4 border-white">
-          <h1 className="text-4xl font-bold tracking-tight text-grey-900 sm:text-6xl">
-            Create The Future
-          </h1>
-          <p className="mt-6 text-lg max-w-prose text-muted-foreground font-times-new-roman">
-            Be simple. Be creative. Be you.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-6 bg-white">
-            <Link
-              href="/sell"
-              className="rounded-lg h-10 px-4 py-2 text-white bg-zinc-900"
-            >
-              Features
-            </Link>
-            <Button variant="ghost"> Our quality promise &rarr;</Button>
-          </div>
+      <div className="ml-60 py-20 mx-0 text-center flex flex-col items-start max-w-3xl border-b-4 border-white">
+        <h1 className="text-4xl font-bold tracking-tight text-grey-900 sm:text-6xl mx-auto">
+          Create The Future
+        </h1>
+        <p className="mt-6 text-lg max-w-prose text-muted-foreground font-times-new-roman mx-auto">
+          Be simple. Be creative. Be you.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 mt-6 bg-white mx-auto">
+          <Link
+            href="/sell"
+            className="rounded-lg h-10 px-4 py-2 text-white bg-zinc-900"
+          >
+            Start Now
+          </Link>
         </div>
+        <div className="ml-auto py-20 text-center flex flex-col items-start max-w-3xl border-b-4 border-white">
+          <h1 className="text-4xl font-bold tracking-tight text-grey-900 sm:text-6xl mx-auto">
+            Hello
+          </h1>
+          <p className="mt-6 text-lg max-w-prose text-muted-foreground font-times-new-roman mx-auto">
+            hello ebjnafoiufahsofb
+          </p>
+        </div>
+      </div>
 
+      <MaxWidthWrapper>
         <ProductReel
           query={{ sort: "desc", limit: 4 }}
           href="/store"
@@ -90,12 +104,81 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-8">
           <Link
             href="/selling"
-            className="rounded-lg h-10 px-4 py-2 text-white bg-black"
+            className="rounded-lg px-4 py-2 text-white bg-black"
           >
             Learn To Sell
           </Link>
         </div>
       </section>
+
+      <div className="h-screen">
+        <div className="flex justify-center p-10">
+          <h1 className="font-semibold text-3xl">Make Money As An Affiliate</h1>
+          <p>Partner with Dream and Creators to make money!</p>
+        </div>
+        <MaxWidthWrapper>
+          <div className="p-5 border rounded-3xl border-white bg-zinc-100">
+            <div className="grid grid-cols-1 gap-y-12 sm:gird-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0">
+              Hello
+            </div>
+          </div>
+        </MaxWidthWrapper>
+      </div>
+
+      <div>
+        <div className="mb-40 h-auto bg-white pt-28 border-t border-white flex flex-col items-start space-y-8 pl-40">
+          <h1 className="text-3xl font-semibold mb-6 text-left">
+            Questions Frequently Asked
+          </h1>
+
+          <div className="w-full max-w-2xl">
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-lg py-4">
+                  What is Dream?
+                </AccordionTrigger>
+                <AccordionContent className="text-base px-4 py-2">
+                  Dream is the world&apos;s first marketplace where you can buy
+                  and sell just digital assets and only digital assets. We
+                  verify every product manually so quality can be expected from
+                  every purchase.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="w-full max-w-2xl">
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-2">
+                <AccordionTrigger className="text-lg py-4">
+                  How can I sell on Dream?
+                </AccordionTrigger>
+                <AccordionContent className="text-base px-4 py-2">
+                  Selling on Dream is unquestionably simple. Locate &quot;Create
+                  Account&quot; in the top right of your screen. Once logged in
+                  head over to your Seller-Dashboard located under &quot;My
+                  Account&quot;. From your Seller-Dashboard click
+                  &quot;Products&quot; and then &quot;Create New&quot;.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="w-full max-w-2xl">
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-3">
+                <AccordionTrigger className="text-lg py-4">
+                  Is Dream actually free to sell on?
+                </AccordionTrigger>
+                <AccordionContent className="text-base px-4 py-2">
+                  Yes. Dream is fully free! No Plans, Seller fees or even
+                  transaction fees!
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </div>
 
       <section className="border-t border-zinc-50 bg-gray-50">
         <MaxWidthWrapper className="py-20 border-b-4 border-zinc-50">

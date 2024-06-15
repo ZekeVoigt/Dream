@@ -14,6 +14,7 @@ import UserAccountNav from "./UserAccountNav";
 import Image from "next/image";
 
 import { PRODUCT_CATEGORIES } from "@/config";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
   const nextCookies = cookies();
@@ -25,15 +26,11 @@ const Navbar = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              <div className=" h-5 hidden lg:ml-8 lg:block lg:self-stretch ">
+              <MobileNav />
+
+              <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
-                  <Image
-                    className="rounded-xl"
-                    src=""
-                    width={50}
-                    height={50}
-                    alt="Dream Logo"
-                  />
+                  <Icons.logo className="h-10 w-10" />
                 </Link>
               </div>
 
@@ -46,6 +43,16 @@ const Navbar = async () => {
               {/* STOP HERE DONT TOUCH THIS STUFF ZEKE IM MAKING NEW NAV */}
 
               <div className="ml-auto flex items-center">
+                <Link
+                  href="/Affiliate"
+                  className={buttonVariants({
+                    variant: "ghost",
+                  })}
+                >
+                  Become An Affiliate
+                </Link>
+                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   {user ? null : (
                     <Link
@@ -54,12 +61,15 @@ const Navbar = async () => {
                         variant: "ghost",
                       })}
                     >
-                      Sign in
+                      Sign In
                     </Link>
                   )}
 
                   {user ? null : (
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                    <span
+                      className=" h-6 w-px bg-gray-200"
+                      aria-hidden="true"
+                    />
                   )}
 
                   {user ? (
@@ -71,7 +81,7 @@ const Navbar = async () => {
                         variant: "ghost",
                       })}
                     >
-                      Create account
+                      Create Account
                     </Link>
                   )}
 

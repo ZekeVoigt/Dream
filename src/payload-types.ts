@@ -13,16 +13,20 @@ export interface Config {
     media: Media;
     product_files: ProductFile;
     orders: Order;
-    "payload-preferences": PayloadPreference;
-    "payload-migrations": PayloadMigration;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
   };
   globals: {};
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
 export interface User {
   id: string;
   products?: (string | Product)[] | null;
   product_files?: (string | ProductFile)[] | null;
-  role: "admin" | "user";
+  role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -36,15 +40,19 @@ export interface User {
   lockUntil?: string | null;
   password: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
 export interface Product {
   id: string;
   user?: (string | null) | User;
   name: string;
   description?: string | null;
   price: number;
-  category: "software" | "templates" | "courses" | "icons";
+  category: 'sofware' | 'design' | 'courses' | 'all';
   product_files: string | ProductFile;
-  approvedForSale?: ("pending" | "approved" | "denied") | null;
+  approvedForSale?: ('pending' | 'approved' | 'denied') | null;
   priceId?: string | null;
   stripeId?: string | null;
   images: {
@@ -54,6 +62,10 @@ export interface Product {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product_files".
+ */
 export interface ProductFile {
   id: string;
   user?: (string | null) | User;
@@ -66,6 +78,10 @@ export interface ProductFile {
   width?: number | null;
   height?: number | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
 export interface Media {
   id: string;
   user?: (string | null) | User;
@@ -104,6 +120,10 @@ export interface Media {
     };
   };
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
 export interface Order {
   id: string;
   _isPaid: boolean;
@@ -112,10 +132,14 @@ export interface Order {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences".
+ */
 export interface PayloadPreference {
   id: string;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: string | User;
   };
   key?: string | null;
@@ -131,6 +155,10 @@ export interface PayloadPreference {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations".
+ */
 export interface PayloadMigration {
   id: string;
   name?: string | null;
@@ -139,6 +167,7 @@ export interface PayloadMigration {
   createdAt: string;
 }
 
-declare module "payload" {
+
+declare module 'payload' {
   export interface GeneratedTypes extends Config {}
 }

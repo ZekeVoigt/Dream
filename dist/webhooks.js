@@ -96,13 +96,9 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                     return [2 /*return*/, res.status(404).json({ error: "No such order exists." })];
                 return [4 /*yield*/, payload.update({
                         collection: "orders",
+                        id: session.metadata.orderId,
                         data: {
                             _isPaid: true,
-                        },
-                        where: {
-                            id: {
-                                equals: session.metadata.orderId,
-                            },
                         },
                     })];
             case 4:
@@ -123,12 +119,10 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                     })];
             case 6:
                 data = _c.sent();
-                res.status(200).json({ data: data });
-                return [3 /*break*/, 8];
+                return [2 /*return*/, res.status(200).json({ data: data })];
             case 7:
                 error_1 = _c.sent();
-                res.status(500).json({ error: error_1 });
-                return [3 /*break*/, 8];
+                return [2 /*return*/, res.status(500).json({ error: error_1 })];
             case 8: return [2 /*return*/, res.status(200).send()];
         }
     });

@@ -3,7 +3,7 @@ import { WebhookRequest } from "./server";
 import { stripe } from "./lib/stripe";
 import type Stripe from "stripe";
 import { getPayloadClient } from "./get-payload";
-import { Product } from "./payload-types";
+import { User, Product, Order } from "./payload-types";
 import { Resend } from "resend";
 import { ReceiptEmailHtml } from "./components/emails/ReceiptEmail";
 
@@ -17,7 +17,7 @@ export const stripeWebhookHandler = async (
   const body = webhookRequest.rawBody;
   const signature = req.headers["stripe-signature"] || "";
 
-  let event;
+  let event: Stripe.Event;
   try {
     event = stripe.webhooks.constructEvent(
       body,
@@ -50,7 +50,7 @@ export const stripeWebhookHandler = async (
       },
     });
 
-    const [user] = users;
+    const [user] = users as unknown as User[];
 
     if (!user) return res.status(404).json({ error: "No such user exists." });
 
@@ -64,19 +64,15 @@ export const stripeWebhookHandler = async (
       },
     });
 
-    const [order] = orders;
+    const [order] = orders as unknown as Order[];
 
     if (!order) return res.status(404).json({ error: "No such order exists." });
 
     await payload.update({
       collection: "orders",
+      id: session.metadata.orderId,
       data: {
         _isPaid: true,
-      },
-      where: {
-        id: {
-          equals: session.metadata.orderId,
-        },
       },
     });
 
@@ -93,9 +89,9 @@ export const stripeWebhookHandler = async (
           products: order.products as Product[],
         }),
       });
-      res.status(200).json({ data });
+      return res.status(200).json({ data });
     } catch (error) {
-      res.status(500).json({ error });
+      return res.status(500).json({ error });
     }
   }
 
