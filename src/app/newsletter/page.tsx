@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import Footer from "@/components/footer";
 
 export default function Newsletter() {
   return (
@@ -327,7 +326,6 @@ export default function Newsletter() {
             </div>
           </div>
         </div>
-        <Footer />
       </section>
     </>
   );

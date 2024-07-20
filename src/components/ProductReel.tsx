@@ -10,13 +10,15 @@ interface ProductReelProps {
   title: string;
   subtitle?: string;
   href?: string;
-  query: TQueryValidator;
+  query: TQueryValidator & { search?: string };
 }
+
+const FALLBACK_LIMIT = 4;
 
 const ProductReel = (props: ProductReelProps) => {
   const { title, subtitle, href, query } = props;
 
-  const FALLBACK_LIMIT = 4;
+  console.log("ProductReel Query:", query);
 
   const { data: queryResults, isLoading } =
     trpc.getInfiniteProducts.useInfiniteQuery(
@@ -29,7 +31,11 @@ const ProductReel = (props: ProductReelProps) => {
       }
     );
 
-  const products = queryResults?.pages.flatMap((page) => page.items);
+  const products = queryResults?.pages.flatMap(
+    (page) => page.items
+  ) as unknown as (Product | null)[];
+
+  console.log("Products in ProductReel:", products);
 
   let map: (Product | null)[] = [];
   if (products && products.length) {
@@ -39,11 +45,11 @@ const ProductReel = (props: ProductReelProps) => {
   }
 
   return (
-    <section className="py-12 ">
+    <section className="py-12">
       <div className="md:flex md:items-center md:justify-between mb-4">
-        <div className="max-w-2xl px-4 lg:max-w-4xl lg:px-0 ">
+        <div className="max-w-2xl px-4 lg:max-w-4xl lg:px-0">
           {title ? (
-            <h1 className="text-2xl font-bold text-blackgray-900 sm:text-3xl">
+            <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
               {title}
             </h1>
           ) : null}
@@ -64,7 +70,7 @@ const ProductReel = (props: ProductReelProps) => {
 
       <div className="relative">
         <div className="mt-6 flex items-center w-full">
-          <div className="w-full grid grid-vol-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
+          <div className="w-full grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-10 lg:gap-x-8">
             {map.map((product, i) => (
               <ProductListing
                 key={`product-${i}`}

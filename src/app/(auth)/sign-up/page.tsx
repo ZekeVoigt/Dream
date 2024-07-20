@@ -33,13 +33,11 @@ const Page = () => {
     onError: (err) => {
       if (err.data?.code === "CONFLICT") {
         toast.error("This email is already in use. Sign in instead?");
-
         return;
       }
 
       if (err instanceof ZodError) {
         toast.error(err.issues[0].message);
-
         return;
       }
 
@@ -58,11 +56,11 @@ const Page = () => {
 
   return (
     <>
-      <div className="container relative flex pt-20 flex-col items-center lg:px-0 mx-auto">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+      <div className="min-h-screen container flex flex-col items-center pt-10 px-4 sm:px-0 mx-auto">
+        <div className="w-full sm:w-[350px] flex flex-col justify-center space-y-6">
           <div className="flex flex-col items-center space-y-2 text-center">
-            {/*  <Icons.logo className="h-20 w-20" /> Sign up Logo goes here      */}
-            <h1 className="text-2x1 font-bold text-zinc-900">
+            {/* <Icons.logo className="h-20 w-20" /> Sign up Logo goes here */}
+            <h1 className="text-2xl font-bold text-zinc-900">
               Create Your Dream
             </h1>
             <Link
@@ -112,7 +110,7 @@ const Page = () => {
                   )}
                 </div>
 
-                <Button className="rounded-lg h-10 px-4 py-2 text-zinc-100 bg-zinc-900 hover:bg-zinc-900">
+                <Button className="rounded-3xl h-10 px-4 py-2 text-zinc-100 bg-zinc-900 hover:bg-zinc-900">
                   Sign up
                 </Button>
               </div>

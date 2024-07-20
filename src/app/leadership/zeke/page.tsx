@@ -9,7 +9,6 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Footer from "@/components/footer";
 
 const perks = [
   {
@@ -169,7 +168,6 @@ export default function Zeke() {
               ))}
             </div>
           </MaxWidthWrapper>
-          <Footer />
         </section>
       </section>
     </div>

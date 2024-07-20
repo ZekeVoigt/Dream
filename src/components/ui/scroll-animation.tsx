@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -61,7 +62,7 @@ export const Header = ({ translate, titleComponent }: any) => {
       style={{
         translateY: translate,
       }}
-      className="div max-w-5xl mx-auto text-center"
+      className="max-w-5xl mx-auto text-center"
     >
       {titleComponent}
     </motion.div>
@@ -79,25 +80,35 @@ export const Card = ({
   children: React.ReactNode;
 }) => {
   return (
-    <motion.div
-      style={{
-        rotateX: rotate,
-        scale,
-        boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
-      }}
-      className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
-    >
-      <div className="h-full w-full overflow-hidden rounded-2xl bg-black dark:bg-zinc-900 md:rounded-2xl md:p-4 ">
-        <Image
-          src="/sellerdashboardpics/sellerdashboard.png"
-          width={900}
-          height={900}
-          className="inset-0 h-full w-full object-cover rounded"
-          alt="Ipad Image"
-        />
-        {children}
+    <>
+      <motion.div
+        style={{
+          rotateX: rotate,
+          scale,
+          boxShadow:
+            "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
+        }}
+        className="max-w-5xl -mt-12 mx-auto h-[30rem] md:h-[40rem] w-full border-4 border-[#6C6C6C] p-2 md:p-6 bg-[#222222] rounded-[30px] shadow-2xl"
+      >
+        <div className="h-full w-full overflow-hidden rounded-2xl bg-black dark:bg-zinc-900 md:rounded-2xl md:p-4 ">
+          <Image
+            src="/sellerdashboardpics/sellerdashboard.png"
+            width={900}
+            height={900}
+            className="inset-0 h-full w-full object-cover rounded"
+            alt="Ipad Image"
+          />
+          {children}
+        </div>
+      </motion.div>
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-20">
+        <Link
+          href={"/selling"}
+          className="rounded-lg h-10 px-4 py-2 text-white bg-zinc-900"
+        >
+          Learn To Sell
+        </Link>
       </div>
-    </motion.div>
+    </>
   );
 };

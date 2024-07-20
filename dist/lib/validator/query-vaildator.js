@@ -6,4 +6,5 @@ exports.QueryValidator = zod_1.z.object({
     category: zod_1.z.string().optional(),
     sort: zod_1.z.enum(["asc", "desc"]).optional(),
     limit: zod_1.z.number().optional(),
+    search: zod_1.z.string().optional(),
 });

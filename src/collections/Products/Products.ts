@@ -137,15 +137,54 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: "Info",
+      type: "text",
+      label: "Please Read First",
+      admin: {
+        placeholder:
+          "Products are reveiwed once (1 time) a day at a certain time depending on our calander (see here). For help contact our dashboard (see here - https://discord.gg/wPq5mE5).",
+      },
+    },
+    {
       name: "name",
       label: "Name",
       type: "text",
+      admin: {
+        placeholder: "Example: Marketing 101",
+      },
       required: true,
     },
     {
       name: "description",
       type: "textarea",
       label: "Product details",
+      admin: {
+        placeholder:
+          "'Product details' refer to specific information that describes a product comprehensively. It typically includes essential attributes such as dimensions, materials used, How you got it, and any other relevant specifications that provide a clear understanding of what the product is and its capabilities. This information helps potential buyers make informed decisions before purchasing.",
+      },
+    },
+    {
+      name: "product_features",
+      type: "array",
+      label: "Product Features",
+      required: true,
+      fields: [
+        {
+          name: "icon",
+          type: "select",
+          options: [
+            { label: "🎥 Livestreams", value: "livestreams" },
+            { label: "🤑 $1k to $10k Challenge", value: "challenge" },
+            { label: "🧑‍💼 Trading Education", value: "education" },
+            { label: "📈 Comprehensive Charts", value: "charts" },
+            { label: "🪙 Memecoins", value: "memecoins" },
+            { label: "One-on-One Sessions", value: "sessions" },
+            { label: "🏈 Daily Sports Bets", value: "sports_bets" },
+          ],
+          required: true,
+          label: "Product Features",
+        },
+      ],
     },
     {
       name: "price",
@@ -156,19 +195,59 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: "saleType",
+      label: "Sale Type",
+      type: "select",
+      options: [
+        {
+          label: "One Time Sale",
+          value: "single",
+        },
+        {
+          label: "Unlimited Sale",
+          value: "unlimited",
+        },
+      ],
+      required: true,
+    },
+    {
       name: "category",
-      label: "Category",
+      label: "Product Category",
       type: "select",
       options: PRODUCT_CATEGORIES.map(({ label, value }) => ({ label, value })),
       required: true,
     },
+
     {
       name: "product_files",
       label: "Product file(s)",
-      type: "relationship",
+      type: "array",
       required: true,
-      relationTo: "product_files",
-      hasMany: false,
+      fields: [
+        {
+          name: "file",
+          label: "Product File",
+          type: "relationship",
+          relationTo: "product_files",
+          hasMany: false,
+        },
+        {
+          name: "separator",
+          label: "Or",
+          type: "text",
+          admin: {
+            description: "<strong>Or</strong>",
+          },
+        },
+        {
+          name: "link",
+          label: "Link",
+          type: "text",
+          admin: {
+            placeholder: "http://example.com/your-product-link",
+          },
+        },
+      ],
     },
     {
       name: "approvedForSale",

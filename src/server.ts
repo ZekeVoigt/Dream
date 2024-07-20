@@ -12,6 +12,12 @@ import path from "path";
 import { PayloadRequest } from "payload/types";
 import { parse } from "url";
 
+// Set your secret key. Remember to switch to your live secret key in production.
+// See your keys here: https://dashboard.stripe.com/apikeys
+const stripe = require("stripe")(
+  "sk_test_51P59T605fNcBdPQgaHEwvjCSxRBWa6nWrAdn3I9nQNoB8oSWxtIGsNoBs6nFeuuzLGDYW0joG8W526zdClNqxYJd00qzznL2Kc"
+);
+
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
@@ -59,6 +65,8 @@ const start = async () => {
 
     return;
   }
+
+  // Use the new account link router
 
   const cartRouter = express.Router();
 

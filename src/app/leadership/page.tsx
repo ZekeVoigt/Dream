@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Footer from "@/components/footer";
+
 import { Button } from "@/components/ui/button";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { ArrowDownToLine, CheckCircle, HandHelping } from "lucide-react";
@@ -39,7 +39,6 @@ export default function Leadership() {
       <section className="bg-white h-96 w-96 flex justify-center items-center">
         <p></p>
       </section>
-      <Footer />
     </div>
   );
 }

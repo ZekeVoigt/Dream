@@ -1,142 +1,168 @@
 "use client";
 
 import React from "react";
-import MaxWidthWrapper from "./MaxWidthWrapper";
+import {
+  MountainIcon,
+  TwitterIcon,
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+} from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <>
-      <footer className="bg-zinc-50 text-black py-6 text-center flex justify-center">
-        <div className="text-lg">
-          <div className="mb-2">
-            <div className="grid grid-cols-3 gap-x-4 gap-y-2">
-              <div>
-                <div className="flex flex-col items-center">
-                  <h3 className="text-sm font-semibold text-zinc-800 mb-2">
-                    Shop and Learn
-                  </h3>
-                  <a
-                    href="/store"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Store
-                  </a>
-                  <a
-                    href="/sell"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Sell
-                  </a>
-                  <a
-                    href="/selling"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Learn To Sell
-                  </a>
-                  <a
-                    href="/software"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Software
-                  </a>
-                  <a
-                    href="/templates"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Templates
-                  </a>
-                  <a
-                    href="/affiliate"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Affiliate
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex flex-col items-center">
-                  <h3 className="text-sm font-medium text-zinc-800 mb-2">
-                    Account
-                  </h3>
-                  <a
-                    href="/account"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Profile
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex flex-col items-center">
-                  <h3 className="text-sm font-medium text-zinc-800 mb-2">
-                    About Dream
-                  </h3>
-                  <a
-                    href="/sell"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Features
-                  </a>
-                  <a
-                    href="/newsletter"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Newsletter
-                  </a>
-                  <a
-                    href="/leadership"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Leadership
-                  </a>
-                  <a
-                    href="/sitemap"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Sitemap
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex flex-col items-center">
-                  <h3 className="text-sm font-medium text-zinc-800 mb-2">
-                    Dream Values
-                  </h3>
-                  <a
-                    href="/impoweringhope"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Impowering Hope
-                  </a>
-                  <a
-                    href="/values"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Giving Back
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Privacy
-                  </a>
-                  <a
-                    href="/accessiblity"
-                    className="text-zinc-700 text-sm hover:underline"
-                  >
-                    Accessibility
-                  </a>
-                </div>
-              </div>
+      <footer className="bg-background text-foreground py-12 border-t">
+        <div className="container max-w-5xl px-4 md:px-6 mx-auto flex flex-wrap justify-center text-center gap-8">
+          <div className="p-5 space-y-4 flex-shrink-0">
+            <div className="flex items-center justify-center gap-2">
+              <MountainIcon className="w-6 h-6 animate-pulse" />
+              <h3 className="text-2xl font-bold tracking-tight">Dream</h3>
             </div>
+            <p className="text-muted-foreground text-sm"></p>
+          </div>
+
+          <div className="p-5 space-y-2 flex-shrink-0">
+            <h4 className="text-sm font-medium">Shop & Learn</h4>
+            <nav className="flex flex-col items-center space-y-1">
+              <Link
+                href="/"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Home
+              </Link>
+              <Link
+                href="/store"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Store
+              </Link>
+              <Link
+                href="/sell"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Sell
+              </Link>
+              <Link
+                href="/selling"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Learn To Sell
+              </Link>
+            </nav>
+          </div>
+
+          <div className="p-5 space-y-2 flex-shrink-0">
+            <h4 className="text-sm font-medium">Account</h4>
+            <nav className="flex flex-col items-center space-y-1">
+              <Link
+                href="/"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Profile
+              </Link>
+              <Link
+                href="/Help"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Help
+              </Link>
+            </nav>
+          </div>
+
+          <div className="p-5 space-y-2 flex-shrink-0">
+            <h4 className="text-sm font-medium">Dream</h4>
+            <nav className="flex flex-col items-center space-y-1">
+              <Link
+                href="/features"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Features
+              </Link>
+              <Link
+                href="/affiliate"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Affiliate
+              </Link>
+              <Link
+                href="/sitemap"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Sitemap
+              </Link>
+              <Link
+                href="/community"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                Community
+              </Link>
+            </nav>
+          </div>
+
+          <div className="p-5 space-y-2 flex-shrink-0">
+            <h4 className="text-sm font-medium">Social</h4>
+            <nav className="flex flex-col items-center space-y-1">
+              <Link
+                href="#"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <TwitterIcon className="w-4 h-4 animate-pulse" />
+                  Twitter
+                </div>
+              </Link>
+              <Link
+                href="#"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <FacebookIcon className="w-4 h-4 animate-pulse" />
+                  Facebook
+                </div>
+              </Link>
+              <Link
+                href="#"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <InstagramIcon className="w-4 h-4 animate-pulse" />
+                  Instagram
+                </div>
+              </Link>
+              <Link
+                href="#"
+                className="text-sm hover:underline transition-colors duration-300"
+                prefetch={false}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <LinkedinIcon className="w-4 h-4 animate-pulse" />
+                  LinkedIn
+                </div>
+              </Link>
+            </nav>
           </div>
         </div>
       </footer>
-      <div className="text-lg text-center text-zinc-700 bg-zinc-50">
-        © 2024 Dream Inc. All rights reserved.
+
+      <div>
+        <p className="text-center text-9xl md:text-7xl lg:text-[10rem] font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 dark:from-neutral-950 to-neutral-200 dark:to-neutral-800 inset-x-0">
+          Create The Future.
+        </p>
       </div>
     </>
   );

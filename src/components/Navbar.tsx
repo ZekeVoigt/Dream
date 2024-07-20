@@ -30,7 +30,7 @@ const Navbar = async () => {
 
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
-                  <Icons.logo className="h-10 w-10" />
+                  {/*   <Icons.logo className="h-10 w-10" /> */}
                 </Link>
               </div>
 
@@ -43,16 +43,6 @@ const Navbar = async () => {
               {/* STOP HERE DONT TOUCH THIS STUFF ZEKE IM MAKING NEW NAV */}
 
               <div className="ml-auto flex items-center">
-                <Link
-                  href="/Affiliate"
-                  className={buttonVariants({
-                    variant: "ghost",
-                  })}
-                >
-                  Become An Affiliate
-                </Link>
-                <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   {user ? null : (
                     <Link
@@ -61,7 +51,7 @@ const Navbar = async () => {
                         variant: "ghost",
                       })}
                     >
-                      Sign In
+                      Sign in
                     </Link>
                   )}
 

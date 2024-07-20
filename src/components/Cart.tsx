@@ -34,7 +34,7 @@ const Cart = () => {
     0
   );
 
-  const fee = 1;
+  const fee = 0;
 
   return (
     <Sheet>
@@ -63,10 +63,6 @@ const Cart = () => {
             <div className="space-y-4 pr-6">
               <Separator />
               <div className="space-y-1.5 text-sm">
-                <div className="flex">
-                  <span className="flex-1">Shipping</span>
-                  <span>Free</span>
-                </div>
                 <div className="flex">
                   <span className="flex-1">Transaction Fee</span>
                   <span>{formatPrice(fee)}</span>

@@ -3,7 +3,7 @@ import { WebhookRequest } from "./server";
 import { stripe } from "./lib/stripe";
 import type Stripe from "stripe";
 import { getPayloadClient } from "./get-payload";
-import { User, Product, Order } from "./payload-types";
+import { Product } from "./payload-types";
 import { Resend } from "resend";
 import { ReceiptEmailHtml } from "./components/emails/ReceiptEmail";
 
@@ -50,9 +50,11 @@ export const stripeWebhookHandler = async (
       },
     });
 
-    const [user] = users as unknown as User[];
+    const [user] = users;
 
-    if (!user) return res.status(404).json({ error: "No such user exists." });
+    if (!user) {
+      return res.status(404).json({ error: "No such user exists." });
+    }
 
     const { docs: orders } = await payload.find({
       collection: "orders",
@@ -64,22 +66,32 @@ export const stripeWebhookHandler = async (
       },
     });
 
-    const [order] = orders as unknown as Order[];
+    const [order] = orders;
 
-    if (!order) return res.status(404).json({ error: "No such order exists." });
+    if (!order) {
+      return res.status(404).json({ error: "No such order exists." });
+    }
 
     await payload.update({
       collection: "orders",
-      id: session.metadata.orderId,
       data: {
         _isPaid: true,
+      },
+      where: {
+        id: {
+          equals: session.metadata.orderId,
+        },
       },
     });
 
     // send receipt
     try {
+      if (typeof user.email !== "string") {
+        throw new Error("Invalid user email");
+      }
+
       const data = await resend.emails.send({
-        from: "Dream <zekevoigt@icloud.com>",
+        from: "Dream <Zekevoigt@icloud.com>",
         to: [user.email],
         subject: "Thanks for your order! This is your receipt.",
         html: ReceiptEmailHtml({
@@ -89,9 +101,9 @@ export const stripeWebhookHandler = async (
           products: order.products as Product[],
         }),
       });
-      return res.status(200).json({ data });
+      res.status(200).json({ data });
     } catch (error) {
-      return res.status(500).json({ error });
+      res.status(500).json({ error });
     }
   }
 

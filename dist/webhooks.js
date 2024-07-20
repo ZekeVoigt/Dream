@@ -43,7 +43,7 @@ var resend_1 = require("resend");
 var ReceiptEmail_1 = require("./components/emails/ReceiptEmail");
 var resend = new resend_1.Resend(process.env.RESEND_API_KEY);
 var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var webhookRequest, body, signature, event, session, payload, users, user, orders, order, data, error_1;
+    var webhookRequest, body, signature, event, session, userId, orderId, payload, users, user, orders, order, data, error_1;
     var _a, _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
@@ -61,21 +61,28 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                 }
                 session = event.data.object;
                 if (!((_a = session === null || session === void 0 ? void 0 : session.metadata) === null || _a === void 0 ? void 0 : _a.userId) || !((_b = session === null || session === void 0 ? void 0 : session.metadata) === null || _b === void 0 ? void 0 : _b.orderId)) {
-                    return [2 /*return*/, res.status(400).send("Webhook Error: No user present in metadata")];
+                    return [2 /*return*/, res
+                            .status(400)
+                            .send("Webhook Error: No user or order ID in metadata")];
                 }
+                userId = session.metadata.userId;
+                orderId = session.metadata.orderId;
                 if (!(event.type === "checkout.session.completed")) return [3 /*break*/, 8];
                 return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
             case 1:
                 payload = _c.sent();
+                _c.label = 2;
+            case 2:
+                _c.trys.push([2, 7, , 8]);
                 return [4 /*yield*/, payload.find({
                         collection: "users",
                         where: {
                             id: {
-                                equals: session.metadata.userId,
+                                equals: userId,
                             },
                         },
                     })];
-            case 2:
+            case 3:
                 users = (_c.sent()).docs;
                 user = users[0];
                 if (!user)
@@ -85,27 +92,28 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                         depth: 2,
                         where: {
                             id: {
-                                equals: session.metadata.orderId,
+                                equals: orderId,
                             },
                         },
                     })];
-            case 3:
+            case 4:
                 orders = (_c.sent()).docs;
                 order = orders[0];
                 if (!order)
                     return [2 /*return*/, res.status(404).json({ error: "No such order exists." })];
                 return [4 /*yield*/, payload.update({
                         collection: "orders",
-                        id: session.metadata.orderId,
                         data: {
                             _isPaid: true,
                         },
+                        where: {
+                            id: {
+                                equals: orderId,
+                            },
+                        },
                     })];
-            case 4:
-                _c.sent();
-                _c.label = 5;
             case 5:
-                _c.trys.push([5, 7, , 8]);
+                _c.sent();
                 return [4 /*yield*/, resend.emails.send({
                         from: "Dream <zekevoigt@icloud.com>",
                         to: [user.email],
@@ -113,8 +121,8 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                         html: (0, ReceiptEmail_1.ReceiptEmailHtml)({
                             date: new Date(),
                             email: user.email,
-                            orderId: session.metadata.orderId,
-                            products: order.products,
+                            orderId: orderId,
+                            products: order.products, // Ensure order.products is compatible with Product[]
                         }),
                     })];
             case 6:
@@ -122,7 +130,15 @@ var stripeWebhookHandler = function (req, res) { return __awaiter(void 0, void 0
                 return [2 /*return*/, res.status(200).json({ data: data })];
             case 7:
                 error_1 = _c.sent();
-                return [2 /*return*/, res.status(500).json({ error: error_1 })];
+                if (error_1 instanceof Error) {
+                    console.error("Error processing webhook:", error_1.message);
+                    return [2 /*return*/, res.status(500).json({ error: error_1.message })];
+                }
+                else {
+                    console.error("Unexpected error processing webhook:", error_1);
+                    return [2 /*return*/, res.status(500).json({ error: "Unexpected error occurred" })];
+                }
+                return [3 /*break*/, 8];
             case 8: return [2 /*return*/, res.status(200).send()];
         }
     });

@@ -1,4 +1,4 @@
-import { useState, SetStateAction } from "react";
+import { useState, SetStateAction, Key } from "react";
 import AddToCartButton from "@/components/AddToCartButton";
 import ImageSlider from "@/components/ImageSlider";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
@@ -6,12 +6,13 @@ import ProductReel from "@/components/ProductReel";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { getPayloadClient } from "@/get-payload";
 import { formatPrice } from "@/lib/utils";
-import { link } from "fs";
-import { Check, Shield, Star } from "lucide-react";
+import { Check, Shield, ShieldCheck, Star, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Footer from "@/components/footer";
+
 import { Product } from "@/payload-types"; // Import Product type
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
 interface PageProps {
   params: {
@@ -122,64 +123,7 @@ const Page = async ({ params }: PageProps) => {
                   </p>
                 </div>
 
-                {/* Stars */}
-
-                <div className="flex items-center mt-5">
-                  <svg
-                    className="w-4 h-4 text-black0 me-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 22 20"
-                  >
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                  </svg>
-                  <svg
-                    className="w-4 h-4 text-black me-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 22 20"
-                  >
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                  </svg>
-                  <svg
-                    className="w-4 h-4 text-black me-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 22 20"
-                  >
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                  </svg>
-                  <svg
-                    className="w-4 h-4 black me-1"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 22 20"
-                  >
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                  </svg>
-                  <svg
-                    className="w-4 h-4 text-gray-300 me-1 dark:text-gray-500"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 22 20"
-                  >
-                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                  </svg>
-                  <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                    4.95
-                  </p>
-                  <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                    out of
-                  </p>
-                  <p className="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                    5
-                  </p>
-                </div>
+                {/* Link */}
               </section>
             </div>
 
@@ -193,17 +137,17 @@ const Page = async ({ params }: PageProps) => {
             {/* Add to cart */}
             <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-2-lg lg:self-start">
               <div>
-                <div className="mt-10 bg-zinc-900 text-white border rounded-xl">
+                <div className="mt-10 text-white border-zinc-900 rounded-3xl">
                   <AddToCartButton product={typedProduct} />
                 </div>
                 <div className="mt-6 text-center">
                   <div className="group inline-flex text-sm text-medium">
-                    <Shield
+                    <ShieldCheck
                       aria-hidden="true"
                       className="mr-2 h-5 w-5 flex-shrink-0 text-gray-400"
                     />
                     <span className="text-muted-foreground hover:text-gray-700">
-                      30 Day Return Guarantee
+                      Secure payments with Stripe
                     </span>
                   </div>
                 </div>
@@ -212,14 +156,48 @@ const Page = async ({ params }: PageProps) => {
           </div>
         </div>
 
-        <div>
-          <MaxWidthWrapper>
-            <div>
-              <div className="flex justify-center">
-                <h1 className="font-semibold text-3xl">Features</h1>
-              </div>
+        <div className="flex justify-center items-center mt-36">
+          <div className="p-5 border rounded-3xl border-white bg-zinc-100 w-full max-w-5xl">
+            <h1 className="font-bold text-4xl text-zinc-900 text-center mb-8">
+              Features for {typedProduct.name}
+            </h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.isArray(typedProduct.product_features) &&
+              typedProduct.product_features.length > 0 ? (
+                typedProduct.product_features.map((feature, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center bg-white text-zinc-500 p-6 rounded-lg shadow-md"
+                  >
+                    {feature.icon && (
+                      <span className="text-2xl mr-4">
+                        {feature.icon === "livestreams" && "🎥"}
+                        {feature.icon === "challenge" && "🏆"}
+                        {feature.icon === "education" && "📚"}
+                        {feature.icon === "charts" && "📊"}
+                        {feature.icon === "memecoins" && "💰"}
+                        {feature.icon === "sessions" && "👤"}
+                        {feature.icon === "sports_bets" && "🏅"}
+                      </span>
+                    )}
+                    <span className="text-lg">
+                      {feature.icon === "livestreams" && "Livestreams"}
+                      {feature.icon === "challenge" && "$1k to $10k Challenge"}
+                      {feature.icon === "education" && "Trading Education"}
+                      {feature.icon === "charts" && "Comprehensive Charts"}
+                      {feature.icon === "memecoins" && "Memecoins"}
+                      {feature.icon === "sessions" && "One-on-One Sessions"}
+                      {feature.icon === "sports_bets" && "Daily Sports Bets"}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="col-span-full p-3 text-center text-gray-500">
+                  No features available for this product.
+                </p>
+              )}
             </div>
-          </MaxWidthWrapper>
+          </div>
         </div>
 
         <ProductReel
@@ -228,14 +206,141 @@ const Page = async ({ params }: PageProps) => {
           title={`Similar ${label} Products`}
           subtitle={`Browse similar high-quality ${label} products just like "${typedProduct.name}"`}
         />
-        <div className=" h-screen">
-          <div>
-            <h1>Testimonials will go here </h1>
-          </div>
-        </div>
       </MaxWidthWrapper>
 
-      <Footer />
+      {/* ADD FUNCTIONING FOR TESIMONIALS & STARS (7/17/24) thinking using payload...? */}
+
+      <section className="bg-background py-12 md:py-16 lg:py-20">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="mb-8 md:mb-12 lg:mb-16">
+            <h2 className="text-2xl flex justify-center font-bold md:text-3xl lg:text-4xl">
+              What Our Customers Say about "{typedProduct.name}"
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="flex flex-col items-start rounded-lg bg-card p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <div className="mb-4 flex items-center justify-between w-full">
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-10 w-10 border">
+                    <AvatarImage src="/placeholder-user.jpg" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-base font-semibold">Sarah Johnson</h3>
+                    <p className="text-sm text-muted-foreground">
+                      CEO, Acme Inc
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                "I've been using this product for months and it has completely
+                transformed my workflow. The intuitive design and powerful
+                features have made my job so much easier."
+              </p>
+            </div>
+            <div className="flex flex-col items-start rounded-lg bg-card p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <div className="mb-4 flex items-center justify-between w-full">
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-10 w-10 border">
+                    <AvatarImage src="/placeholder-user.jpg" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-base font-semibold">Alex Smith</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Product Manager, Globex Inc
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                "This product has been a game-changer for my team. The
+                collaboration features and seamless integration have made our
+                workflow so much more efficient."
+              </p>
+            </div>
+            <div className="flex flex-col items-start rounded-lg bg-card p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <div className="mb-4 flex items-center justify-between w-full">
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-10 w-10 border">
+                    <AvatarImage src="/placeholder-user.jpg" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-base font-semibold">Emily Parker</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Marketing Manager, Stark Industries
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                "I was hesitant to try this product at first, but I'm so glad I
+                did. The customer support has been outstanding, and the features
+                have exceeded my expectations."
+              </p>
+            </div>
+            <div className="flex flex-col items-start rounded-lg bg-card p-6 shadow-lg transition-all duration-300 hover:shadow-xl">
+              <div className="mb-4 flex items-center justify-between w-full">
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-10 w-10 border">
+                    <AvatarImage src="/placeholder-user.jpg" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-base font-semibold">Michael Chen</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Software Engineer, Stark Industries
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                  <StarIcon className="h-5 w-5 fill-primary" />
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                "This product has completely transformed the way my team
+                collaborates. The intuitive interface and powerful features have
+                made our work so much more efficient and enjoyable."
+              </p>
+            </div>
+          </div>
+
+          {/* ADD FUNCTIONING FOR LEAVING A REVIEW */}
+
+          <div className="flex justify-center mt-10">
+            <Button className="bg-zinc-900 text-white rounded-3xl">
+              Leave A Review
+            </Button>
+          </div>
+        </div>
+      </section>
     </>
   );
 };

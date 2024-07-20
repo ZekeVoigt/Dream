@@ -12,112 +12,114 @@ const MobileNav = () => {
 
   const pathname = usePathname();
 
-  // whenever we click an item in the menu and navigate away, we want to close the menu
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  // when we click the path we are currently on, we still want the mobile menu to close,
-  // however we cant rely on the pathname for it because that won't change (we're already there)
   const closeOnCurrent = (href: string) => {
     if (pathname === href) {
       setIsOpen(false);
     }
   };
 
-  // remove second scrollbar when mobile menu is open
   useEffect(() => {
     if (isOpen) document.body.classList.add("overflow-hidden");
     else document.body.classList.remove("overflow-hidden");
   }, [isOpen]);
 
-  if (!isOpen)
-    return (
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        className="lg:hidden relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-      >
-        <Menu className="h-6 w-6" aria-hidden="true" />
-      </button>
-    );
-
   return (
-    <div>
-      <div className="relative z-40 lg:hidden">
-        <div className="fixed inset-0 bg-black bg-opacity-25" />
-      </div>
-
-      <div className="fixed overflow-y-scroll overscroll-y-none inset-0 z-40 flex">
-        <div className="w-4/5">
-          <div className="relative flex w-full max-w-sm flex-col overflow-y-auto bg-white pb-12 shadow-xl">
-            <div className="flex px-4 pb-2 pt-5">
-              <button
-                type="button"
-                onClick={() => setIsOpen(false)}
-                className="relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-              >
-                <X className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="mt-2">
-              <ul>
-                {PRODUCT_CATEGORIES.map((category) => (
-                  <li
-                    key={category.label}
-                    className="space-y-10 px-4 pb-8 pt-10"
-                  >
-                    <div className="border-b border-gray-200">
-                      <div className="-mb-px flex">
-                        <p className="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 py-4 text-base font-medium">
-                          {category.label}
-                        </p>
+    <>
+      {!isOpen ? (
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="lg:hidden relative -m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-500 hover:text-gray-700"
+        >
+          <Menu className="h-6 w-6" aria-hidden="true" />
+        </button>
+      ) : (
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="fixed inset-0 overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="pointer-events-none fixed inset-y-0 left-0 flex max-w-full">
+                <div className="pointer-events-auto w-screen max-w-md">
+                  <div className="flex h-full flex-col overflow-y-auto bg-white py-6 shadow-xl">
+                    <div className="px-4 sm:px-6">
+                      <div className="flex items-start justify-between">
+                        <h2 className="text-lg font-medium text-gray-900">
+                          Menu
+                        </h2>
+                        <div className="ml-3 flex h-7 items-center">
+                          <button
+                            type="button"
+                            className="rounded-md bg-white text-gray-400 hover:text-gray-500"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <span className="sr-only">Close panel</span>
+                            <X className="h-6 w-6" aria-hidden="true" />
+                          </button>
+                        </div>
                       </div>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-y-10 gap-x-4">
-                      {category.Featured.map((item) => (
-                        <div key={item.name} className="group relative text-sm">
-                          <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75"></div>
-                          <Link
-                            href={item.href}
-                            className="mt-6 block font-medium text-gray-900"
-                          >
-                            {item.name}
-                          </Link>
-                        </div>
-                      ))}
+                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                      <div className="space-y-6">
+                        <Link
+                          href="/sign-in"
+                          onClick={() => closeOnCurrent("/sign-in")}
+                          className="block px-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 rounded-md"
+                        >
+                          Sign in
+                        </Link>
+                        <Link
+                          href="/sign-up"
+                          onClick={() => closeOnCurrent("/sign-up")}
+                          className="block px-4 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 rounded-md"
+                        >
+                          Create Account
+                        </Link>
+                      </div>
+                      <div className="mt-6 border-t border-gray-200 pt-6">
+                        <ul>
+                          {PRODUCT_CATEGORIES.map((category) => (
+                            <li
+                              key={category.label}
+                              className="mb-4 p-5 border-b border-gray-200 mt-6"
+                            >
+                              <p className="text-lg font-semibold text-gray-900">
+                                {category.label}
+                              </p>
+                              <div className="mt-2 grid grid-cols-2 gap-4">
+                                {category.Featured.map((item) => (
+                                  <div
+                                    key={item.name}
+                                    className="font-mono text-sm"
+                                  >
+                                    <Link
+                                      href={item.href}
+                                      className="block font-medium text-gray-900 hover:text-gray-700"
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  </div>
+                                ))}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              <div className="flow-root">
-                <Link
-                  onClick={() => closeOnCurrent("/sign-in")}
-                  href="/sign-in"
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                >
-                  Sign in
-                </Link>
-              </div>
-              <div className="flow-root">
-                <Link
-                  onClick={() => closeOnCurrent("/sign-up")}
-                  href="/sign-up"
-                  className="-m-2 block p-2 font-medium text-gray-900"
-                >
-                  Sign up
-                </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

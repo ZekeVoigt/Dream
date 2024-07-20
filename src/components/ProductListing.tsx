@@ -2,7 +2,6 @@
 
 import { Product } from "@/payload-types";
 import { useEffect, useState } from "react";
-import { boolean } from "zod";
 import { Skeleton } from "./ui/skeleton";
 import Link from "next/link";
 import { cn, formatPrice } from "@/lib/utils";
@@ -25,38 +24,39 @@ const ProductListing = ({ product, index }: ProductListingProps) => {
     return () => clearTimeout(timer);
   }, [index]);
 
-  if (!product || !isVisible) return <ProductPlaceholder />;
+  if (!product || !isVisible) {
+    console.log(`Product at index ${index} is null or undefined`);
+    return <ProductPlaceholder />;
+  }
 
   const label = PRODUCT_CATEGORIES.find(
     ({ value }) => value === product.category
   )?.label;
 
-  const vaildUrls = product.images
+  const validUrls = product.images
     .map(({ image }) => (typeof image === "string" ? image : image.url))
     .filter(Boolean) as string[];
 
-  if (isVisible && product) {
-    return (
-      <Link
-        className={cn("invisible h-full w-full cursor-pointer group/main", {
-          "visible animate-in fade-in-5": isVisible,
-        })}
-        href={`/product/${product.id}`}
-      >
-        <div className="flex flex-col w-full">
-          <ImageSlider urls={vaildUrls} />
+  return (
+    <Link
+      className={cn("invisible h-full w-full cursor-pointer group/main", {
+        "visible animate-in fade-in-5": isVisible,
+      })}
+      href={`/product/${product.id}`}
+    >
+      <div className="flex flex-col w-full">
+        <ImageSlider urls={validUrls} />
 
-          <h3 className="mt-4 font-medium text-sm text-gray-700">
-            {product.name}
-          </h3>
-          <p className="mt-1 text-sm text-gray-500">{label}</p>
-          <p className="mt-1 font-medium text-sm text-gray-900">
-            {formatPrice(product.price)}
-          </p>
-        </div>
-      </Link>
-    );
-  }
+        <h3 className="mt-4 font-medium text-sm text-gray-700">
+          {product.name}
+        </h3>
+        <p className="mt-1 text-sm text-gray-500">{label}</p>
+        <p className="mt-1 font-medium text-sm text-gray-900">
+          {formatPrice(product.price)}
+        </p>
+      </div>
+    </Link>
+  );
 };
 
 const ProductPlaceholder = () => {

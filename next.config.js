@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "dream-git-main-zeke-voigts-projects.vercel.app"],
+    remotePatterns: [
+      {
+        hostname: "localhost",
+        pathname: "**",
+        port: "3000",
+        protocol: "http",
+      },
+    ],
   },
 };
 

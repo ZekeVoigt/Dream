@@ -37,18 +37,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.paymentRouter = void 0;
-var zod_1 = require("zod");
-var trpc_1 = require("./trpc");
 var server_1 = require("@trpc/server");
 var get_payload_1 = require("../get-payload");
 var stripe_1 = require("../lib/stripe");
+var zod_1 = require("zod");
+var trpc_1 = require("./trpc");
 exports.paymentRouter = (0, trpc_1.router)({
     createSession: trpc_1.privateProcedure
         .input(zod_1.z.object({ productIds: zod_1.z.array(zod_1.z.string()) }))
         .mutation(function (_a) {
         var ctx = _a.ctx, input = _a.input;
         return __awaiter(void 0, void 0, void 0, function () {
-            var user, productIds, payload, products, filteredProducts, order, line_items, stripeSession, err_1;
+            var user, productIds, payload, products, typedProducts, filteredProducts, order, line_items_1, stripeSession, err_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -60,6 +60,9 @@ exports.paymentRouter = (0, trpc_1.router)({
                         return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
                     case 1:
                         payload = _b.sent();
+                        _b.label = 2;
+                    case 2:
+                        _b.trys.push([2, 6, , 7]);
                         return [4 /*yield*/, payload.find({
                                 collection: "products",
                                 where: {
@@ -68,69 +71,58 @@ exports.paymentRouter = (0, trpc_1.router)({
                                     },
                                 },
                             })];
-                    case 2:
+                    case 3:
                         products = (_b.sent()).docs;
-                        console.log("Products fetched:", products);
-                        filteredProducts = products.filter(function (prod) { return Boolean(prod.priceId); });
-                        console.log("Filtered products:", filteredProducts);
+                        typedProducts = products;
+                        filteredProducts = typedProducts.filter(function (prod) {
+                            return Boolean(prod.priceId);
+                        });
                         return [4 /*yield*/, payload.create({
                                 collection: "orders",
                                 data: {
                                     _isPaid: false,
-                                    products: filteredProducts.map(function (prod) {
-                                        if (typeof prod.id === "number") {
-                                            return String(prod.id);
-                                        }
-                                        return prod.id;
-                                    }),
+                                    products: filteredProducts.map(function (prod) { return prod.id; }), // Map to array of string IDs
                                     user: user.id,
                                 },
                             })];
-                    case 3:
-                        order = (_b.sent());
-                        line_items = [];
+                    case 4:
+                        order = _b.sent();
+                        line_items_1 = [];
                         filteredProducts.forEach(function (product) {
-                            console.log("Product priceId:", product.priceId);
-                            if (typeof product.priceId === "string") {
-                                line_items.push({
-                                    price: product.priceId,
-                                    quantity: 1,
-                                });
-                            }
-                            else {
-                                throw new server_1.TRPCError({
-                                    code: "BAD_REQUEST",
-                                    message: "Product ".concat(product.id, " does not have a valid priceId."),
-                                });
-                            }
+                            line_items_1.push({
+                                price: product.priceId,
+                                quantity: 1,
+                            });
                         });
-                        line_items.push({
-                            price: "price_1OCeBwA19umTXGu8s4p2G3aX",
+                        line_items_1.push({
+                            price: "price_1PVJAM05fNcBdPQgDEu0sfqT",
                             quantity: 1,
                             adjustable_quantity: {
                                 enabled: false,
                             },
                         });
-                        _b.label = 4;
-                    case 4:
-                        _b.trys.push([4, 6, , 7]);
                         return [4 /*yield*/, stripe_1.stripe.checkout.sessions.create({
                                 success_url: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/thank-you?orderId=").concat(order.id),
                                 cancel_url: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/cart"),
-                                payment_method_types: ["card", "paypal"],
+                                payment_method_types: ["card"],
                                 mode: "payment",
                                 metadata: {
                                     userId: user.id,
                                     orderId: order.id,
                                 },
-                                line_items: line_items,
+                                line_items: line_items_1,
                             })];
                     case 5:
                         stripeSession = _b.sent();
+                        console.log("Stripe session created successfully:", stripeSession);
                         return [2 /*return*/, { url: stripeSession.url }];
                     case 6:
                         err_1 = _b.sent();
-                        return [2 /*return*/, { url: null }];
+                        console.error("Error creating Stripe session:", err_1);
+                        throw new server_1.TRPCError({
+                            code: "INTERNAL_SERVER_ERROR",
+                            message: "Failed to create Stripe session.",
+                        });
                     case 7: return [2 /*return*/];
                 }
             });
@@ -141,7 +133,7 @@ exports.paymentRouter = (0, trpc_1.router)({
         .query(function (_a) {
         var input = _a.input;
         return __awaiter(void 0, void 0, void 0, function () {
-            var orderId, payload, orders, order;
+            var orderId, payload, orders, order, err_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -149,6 +141,9 @@ exports.paymentRouter = (0, trpc_1.router)({
                         return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
                     case 1:
                         payload = _b.sent();
+                        _b.label = 2;
+                    case 2:
+                        _b.trys.push([2, 4, , 5]);
                         return [4 /*yield*/, payload.find({
                                 collection: "orders",
                                 where: {
@@ -157,13 +152,21 @@ exports.paymentRouter = (0, trpc_1.router)({
                                     },
                                 },
                             })];
-                    case 2:
+                    case 3:
                         orders = (_b.sent()).docs;
                         if (!orders.length) {
                             throw new server_1.TRPCError({ code: "NOT_FOUND" });
                         }
                         order = orders[0];
                         return [2 /*return*/, { isPaid: order._isPaid }];
+                    case 4:
+                        err_2 = _b.sent();
+                        console.error("Error polling order status:", err_2);
+                        throw new server_1.TRPCError({
+                            code: "INTERNAL_SERVER_ERROR",
+                            message: "Failed to poll order status.",
+                        });
+                    case 5: return [2 /*return*/];
                 }
             });
         });
