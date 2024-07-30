@@ -39,6 +39,9 @@ const UserAccountNav = ({ user }: { user: User }) => {
         <DropdownMenuItem asChild>
           <Link href="/realm">Realm</Link>
         </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/profile">Profile</Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

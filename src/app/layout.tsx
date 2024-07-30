@@ -6,8 +6,6 @@ import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import Footer from "@/components/footer";
-import React from "react";
-import { PlayProvider } from "@/contexts/Play"; // Make sure the path is correct
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,13 +22,11 @@ export default function RootLayout({
         className={cn("relative h-full font-sans antialiased", inter.className)}
       >
         <main className="relative flex flex-col min-h-screen">
+          {" "}
+          {/* Ensure wrapping */}
           <Providers>
             <Navbar />
-            <React.StrictMode>
-              <PlayProvider>
-                <div className="flex-grow flex-1">{children}</div>
-              </PlayProvider>
-            </React.StrictMode>
+            <div className="flex-grow flex-1">{children}</div>
             <Footer />
           </Providers>
         </main>

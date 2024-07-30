@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "./types"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -28,10 +27,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/test/text.js",
-    "src/components/Background.jsx",
-    "src/components/Airplane.jsx",
-    "src/app/sellingexperience/page.jsx"
+    "src/components/Notifications.js",
+    "src/components/sellerdashboard/Navbar",
+    "src/app/layout.js",
+    "src/app/layout.js"
   ],
   "exclude": ["node_modules"]
 }

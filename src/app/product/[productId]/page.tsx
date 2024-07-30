@@ -6,10 +6,17 @@ import ProductReel from "@/components/ProductReel";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { getPayloadClient } from "@/get-payload";
 import { formatPrice } from "@/lib/utils";
-import { Check, Shield, ShieldCheck, Star, StarIcon } from "lucide-react";
+import {
+  Check,
+  Share,
+  Shield,
+  ShieldCheck,
+  Star,
+  StarIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
+import React from "react";
 import { Product } from "@/payload-types"; // Import Product type
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -111,6 +118,12 @@ const Page = async ({ params }: PageProps) => {
                   <p className="text-base text-muted-foreground">
                     {typedProduct.description}
                   </p>
+                </div>
+
+                <div className="mt-4">
+                  <Link href={""}>
+                    <Share></Share>
+                  </Link>
                 </div>
 
                 <div className="mt-6 flex items-center">

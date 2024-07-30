@@ -1,18 +1,11 @@
 "use client";
 
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { buttonVariants } from "@/components/ui/button";
+
 import Link from "next/link";
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  ChevronRight,
-  DivideCircle,
-  HeartHandshake,
-  RocketIcon,
-  Search,
-  Terminal,
-} from "lucide-react";
+import { ChevronRight, HeartHandshake, Search } from "lucide-react";
 import ProductReel from "@/components/ProductReel";
 import {
   Accordion,
@@ -20,21 +13,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card, ContainerScroll } from "@/components/ui/scroll-animation";
 import { cn } from "@/lib/utils";
 import { ArrowDownToLine, CheckCircle } from "lucide-react";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { FlipWords } from "@/components/ui/flip-words";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import { SparklesCore } from "@/components/ui/sparkles";
 import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
-import BlurFade from "@/components/magicui/blur-fade";
 
 const perks = [
   {
@@ -447,8 +430,6 @@ export default function Home() {
   const [showNotification, setShowNotification] = useState(true);
   const router = useRouter();
 
-  const words = ["Create", "Sell", "Buy"];
-
   const World = dynamic(
     () => import("../components/ui/globe").then((m) => m.World),
     {
@@ -528,13 +509,15 @@ export default function Home() {
           </div>
         </div>
 
-        <BlurFade inView>
+        <div className="-mt-8">
+          {" "}
+          {/* Adjust the negative margin as needed */}
           <ProductReel
             query={{ sort: "desc", limit: 4 }}
             href="/store"
             title="Brand New"
           />
-        </BlurFade>
+        </div>
       </MaxWidthWrapper>
 
       <Link href={"/features"}>
@@ -573,7 +556,7 @@ export default function Home() {
               Sell Anything from Anywhere
             </h2>
             <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
-              We are making the next generation of internet entrpreneurs.
+              Dream is making the next generation of internet entrpreneurs.
             </p>
           </motion.div>
           <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
@@ -583,117 +566,33 @@ export default function Home() {
         </div>
       </div>
 
-      <BlurFade delay={0.1} inView>
-        <MaxWidthWrapper>
-          <section className="w-full py-12 md:py-24 lg:py-32">
-            <div className="container px-4 md:px-6">
-              <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
-                <img
-                  src="/icons/new.jpg"
-                  width="550"
-                  height="550"
-                  alt="Affiliate Program"
-                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-first lg:aspect-square"
-                />
-                <div className="flex flex-col justify-center space-y-4 text-center">
-                  <div className="space-y-2">
-                    <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                      Unlock Your Earning Potential with Our Affiliate Program
-                    </h1>
-                    <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto">
-                      Join our affiliate network and earn commissions by
-                      promoting our products and services. Enjoy competitive
-                      payouts, dedicated support, and a range of marketing tools
-                      to help you succeed.
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
-                    <Link
-                      href="#"
-                      className="bg-black text-white inline-flex h-10 items-center justify-center rounded-3xl bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                      prefetch={false}
-                    >
-                      Join Now
-                    </Link>
-                  </div>
+      <MaxWidthWrapper>
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-[400px_1fr] lg:gap-12 xl:grid-cols-[600px_1fr]">
+              <img
+                src="/icons/new.jpg"
+                width="550"
+                height="550"
+                alt="Affiliate Program"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-first lg:aspect-square"
+              />
+              <div className="flex flex-col justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                    Unlock Your Earning Potential with Our Affiliate Program
+                  </h1>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto">
+                    Join our affiliate network and earn commissions by promoting
+                    our products and services. Enjoy competitive payouts,
+                    dedicated support, and a range of marketing tools to help
+                    you succeed.
+                  </p>
                 </div>
-              </div>
-            </div>
-          </section>
-        </MaxWidthWrapper>
-      </BlurFade>
-
-      <BlurFade inView>
-        <div className="ml-40 mb-40 h-auto bg-white pt-28 border-t border-white flex flex-col px-4 md:pl-40">
-          <h1 className="text-3xl font-semibold mb-6 text-left">
-            Questions Frequently Asked
-          </h1>
-
-          <div className="flex flex-col md:flex-row w-full">
-            <div className="flex flex-col items-start space-y-8 md:w-2/3">
-              <div className="w-full max-w-2xl">
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger className="text-lg py-4">
-                      What is Dream?
-                    </AccordionTrigger>
-                    <AccordionContent className="text-base px-4 py-2 font-mono">
-                      Dream is the world's first marketplace where you can buy
-                      and sell just digital assets and only digital assets. We
-                      verify every product manually so quality can be expected
-                      from every purchase.
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-
-              <div className="w-full max-w-2xl">
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger className="text-lg py-4">
-                      How can I sell on Dream?
-                    </AccordionTrigger>
-                    <AccordionContent className="text-base px-4 py-2 font-mono">
-                      Selling on Dream is unquestionably simple. Locate "Create
-                      Account" in the top right of your screen. Once logged in
-                      head over to your Seller-Dashboard located under "My
-                      Account". From your Seller-Dashboard click "Products" and
-                      then "Create New".
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-
-              <div className="w-full max-w-2xl">
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-3">
-                    <AccordionTrigger className="text-lg py-4">
-                      Is Dream actually free to sell on?
-                    </AccordionTrigger>
-                    <AccordionContent className="text-base px-4 py-2 font-mono">
-                      Yes. Dream is fully free! No Plans, Seller fees or even
-                      transaction fees!
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-            </div>
-
-            <div className="mr-40 mt-7">
-              <div className="bg-zinc-100 mr-40 h-[220px] w-[400px] max-w-[90vw] rounded-lg bg-card p-8 shadow-lg">
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-2xl text-zinc-900 font-bold">
-                      Join Our Discord Comunity
-                    </h3>
-                    <p className="text-zinc-500 text-muted-foreground">
-                      Connect with fellow 'Dream' enthusiasts, share ideas, and
-                      get exclusive updates & Help. Also give us feedback!
-                    </p>
-                  </div>
+                <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
                   <Link
-                    href="/community"
-                    className="bg-zinc-900 text-white inline-flex h-10 items-center justify-center rounded-3xl bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                    href="/affiliate"
+                    className="bg-zinc-900 hover:bg-zinc-900 text-white inline-flex h-10 items-center justify-center rounded-3xl bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                     prefetch={false}
                   >
                     Join Now
@@ -702,8 +601,88 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+      </MaxWidthWrapper>
+
+      <div className="ml-34 mb-40 h-auto bg-white  border-t border-white flex flex-col px-4 md:pl-40">
+        <h1 className="text-3xl font-semibold mb-6 text-left">
+          Questions Frequently Asked
+        </h1>
+
+        <div className="flex flex-col md:flex-row w-full">
+          <div className="flex flex-col items-start space-y-8 md:w-2/3">
+            <div className="w-full max-w-2xl">
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-lg py-4">
+                    What is Dream?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base px-4 py-2 font-mono">
+                    Dream is the world's first marketplace where you can buy and
+                    sell just digital assets and only digital assets. We verify
+                    every product manually so quality can be expected from every
+                    purchase.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+
+            <div className="w-full max-w-2xl">
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-lg py-4">
+                    How can I sell on Dream?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base px-4 py-2 font-mono">
+                    Selling on Dream is unquestionably simple. Locate "Create
+                    Account" in the top right of your screen. Once logged in
+                    head over to your Seller-Dashboard located under "My
+                    Account". From your Seller-Dashboard click "Products" and
+                    then "Create New".
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+
+            <div className="w-full max-w-2xl">
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-lg py-4">
+                    Is Dream actually free to sell on?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base px-4 py-2 font-mono">
+                    Yes. Dream is fully free! No Plans, Seller fees or even
+                    transaction fees!
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </div>
+
+          <div className="mr-34 mt-7">
+            <div className="bg-zinc-100 mr-40 h-[220px] w-[400px] max-w-[90vw] rounded-lg bg-card p-8 shadow-lg">
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-2xl text-zinc-900 font-bold">
+                    Join Our Discord Comunity
+                  </h3>
+                  <p className="text-zinc-500 text-muted-foreground">
+                    Connect with fellow 'Dream' enthusiasts, share ideas, and
+                    get exclusive updates & Help. Also give us feedback!
+                  </p>
+                </div>
+                <Link
+                  href="/community"
+                  className="bg-zinc-900 text-white inline-flex h-10 items-center justify-center rounded-3xl bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  prefetch={false}
+                >
+                  Join Now
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-      </BlurFade>
+      </div>
 
       <MaxWidthWrapper className="pb-10">
         <div className="p-5 border rounded-3xl border-white bg-zinc-100 mt-5">

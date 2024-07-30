@@ -41,7 +41,7 @@ const Footer = () => {
                 Store
               </Link>
               <Link
-                href="/sell"
+                href="/SellerDashboard"
                 className="text-sm hover:underline transition-colors duration-300"
                 prefetch={false}
               >

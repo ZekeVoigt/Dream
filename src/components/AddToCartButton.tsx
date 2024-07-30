@@ -23,7 +23,7 @@ const AddToCartButton = ({ product }: { product: Product }) => {
         addItem(product);
         setIsSuccess(true);
       }}
-      className="w-full bg-zinc-900 text-white border rounded-3xl"
+      className="w-full bg-zinc-900 hover:bg-zinc-900 text-white border rounded-3xl"
     >
       {isSuccess ? "Added!" : "Add to cart"}
     </Button>

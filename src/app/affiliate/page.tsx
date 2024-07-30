@@ -1,75 +1,63 @@
-import { Button } from "@/components/ui/button";
-import { Baby, Link2, PackageSearch } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function affiliate() {
   return (
-    <div className="h-screen bg-zinc-white">
-      <div className="border-lg flex justify-center pt-5 font-semibold text-4xl">
-        Become A Dream Affiliate
-      </div>
-
-      <div className="">
-        <div className="pt-20 text-3xl font-medium mb-5 flex justify-center">
-          How It Works
-        </div>
-
-        <div className="max-w-3xl h-36 mx-auto border-white bg-white rounded-full mb-2 p-5 flex justify-center border reltive">
-          <PackageSearch className="size-16 mr-5 flex mt-5" />
-          <p className="text-center font-bold absolute underline">
-            Refer A Product
-          </p>
-          <div className="max-w-lg mx-auto">
-            <p className="mt-6 text-center max-w-xl text-gray-700">
-              Every product on Dream Marketplace has a unique affiliate reward
-              for referring new customers. You can also receive a reward for
-              referring new merchants to start selling on Dream.
+    <div className="w-full">
+      <section className="bg-zinc-900 py-20 md:py-32 lg:py-40">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h1 className="text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+              Unlock Your Earning Potential
+            </h1>
+            <p className="mt-4 text-lg text-gray-200 md:text-xl lg:text-2xl">
+              Join our Affiliate Program and start earning commissions today
+              with Dream
             </p>
+            <div className="mt-8">
+              <Link
+                href="https://forms.gle/i2TEGYShxu3aFSjh7"
+                className="inline-flex items-center justify-center rounded-md bg-white px-6 py-3 text-lg font-medium text-zinc-900 transition-colors  focus:ring-offset-2"
+                prefetch={false}
+              >
+                Become an Affiliate
+              </Link>
+            </div>
           </div>
         </div>
-
-        <div className="max-w-3xl h-36 mx-auto border-white bg-white border rounded-full mb-2 p-5 flex justify-center">
-          <Link2 className="size-16 mr-5 mt-5" />
-          <p className="text-center font-bold absolute underline">
-            Share Affiliate Link
-          </p>
-          <div className="max-w-lg mx-auto">
-            <p className="mt-6 text-center max-w-xl text-gray-700">
-              To earn an affiliate reward, simply copy your affiliate link and
-              share it with your audience. You can find your affiliate links via
-              the “Refer Customers” and “Refer Businesses” pages (see above).
-            </p>
+      </section>
+      <section className="py-16 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="rounded-lg bg-[#F3F4F6] p-6 shadow-md">
+              <h3 className="text-xl font-bold text-[#1F2937]">
+                Earn Commissions
+              </h3>
+              <p className="mt-4 text-[#6B7280]">
+                Earn a commission on every sale you refer to our products and
+                services.
+              </p>
+            </div>
+            <div className="rounded-lg bg-[#F3F4F6] p-6 shadow-md">
+              <h3 className="text-xl font-bold text-[#1F2937]">
+                Flexible Payouts
+              </h3>
+              <p className="mt-4 text-[#6B7280]">
+                Choose from a variety of payout options, including direct
+                deposit, PayPal, and more.
+              </p>
+            </div>
+            <div className="rounded-lg bg-[#F3F4F6] p-6 shadow-md">
+              <h3 className="text-xl font-bold text-[#1F2937]">
+                Dedicated Support
+              </h3>
+              <p className="mt-4 text-[#6B7280]">
+                Get personalized support from our affiliate team to help you
+                succeed.
+              </p>
+            </div>
           </div>
         </div>
-
-        <div className="max-w-3xl h-36 mx-auto border-white bg-white border rounded-full mb-2 p-5 flex justify-center">
-          <Baby className="size-16 mr-5 mt-5" />
-          <p className="text-center font-bold absolute underline">
-            Get Paid for your work
-          </p>
-          <div className="max-w-lg mx-auto">
-            <p className="mt-6 text-center max-w-xl text-gray-700">
-              When any new customer purchases a product or a merchant gets their
-              first sale, you&apos;ll get a cash reward. It&apos;s that simple.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex justify-center">
-          <Link href={"/sell"}>
-            <Button className="mt-5 border rounded-full bg-zinc-800 text-white border-zinc-800">
-              Start Now
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      <section className=" h-64"></section>
-
-      <div className="flex justify-center font-bold">
-        Recent News from Dream
-      </div>
+      </section>
     </div>
   );
 }
